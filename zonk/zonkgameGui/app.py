@@ -5,35 +5,26 @@ import random
 import math
 
 class ZonkGame(ZonkCount):
-	def __init__(self):
-		self.screen=Tk()
-		self.screen.title("ZonkGuiGame")
-		self.screen.geometry("800x600")
-		self.c = Canvas(self.screen, width=800, height=560,bg="white")
-		self.c.pack()
-		self.screen.mainloop()
+	def __init__(self,root):
+		self.canvas = Canvas(root, width=800, height=560,bg="white")
 		self.btnExit=Button(text="Exit",
-	               command=self.screen.destroy()
-	              )
-
+	               command=root.destroy)
 		self.btnThrow=Button(text="Throw Bones",
-	                command=self.GameStart()
-	              )
+	                command=self.GameStart)
 		self.btnExit.place(x=300,y=565)
 		self.btnThrow.place(x=400,y=565)
-		self.screen.mainloop()
+		self.canvas.pack()
 	def GameStart(self):
 	   array=ZonkCount()
-	   self.c.delete("all")
-	   for i in range(len(array)):
+	   self.canvas.delete("all")
+	   for i in len(array):
 	     number=array[i]
 	     findDots_and_Painting(i,number)
-	   if score(array)<=1000:
+	   if array.score()<=1000:
 	      messagebox.showwarning("try again",score(array))
-	   if score(array)>1000:
+	   if array.score()>1000:
 	      messagebox.showinfo("congratulation",score(array))
-
-	def findDots_and_Painting(i,number):
+	def findDots_and_Painting(self,i,number):
 	   arrayDotsXStart=[30,293,556]
 	   arrayDotsXEnd=[263,526,770]
 	   arrayDotsYStart=[50,330]
@@ -68,113 +59,118 @@ class ZonkGame(ZonkCount):
 	      x_new=x_old*cos_val-y_old*sin_val
 	      y_new=x_old*sin_val+y_old*cos_val
 	      new_points.append([x_new+cx,y_new+cy])
-	   c.create_polygon(new_points,fill="blue")
+	   self.canvas.create_polygon(new_points,fill="blue")
 	   x=randomNumberX
 	   y=randomNumberY
 	   x_center=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	   y_center=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
 	   if number==1:
-	      c.create_oval(x_center-r,y_center-r,x_center+r,y_center+r,fill="white",width=1)
+	      self.canvas.create_oval(x_center-r,y_center-r,x_center+r,y_center+r,fill="white",width=1)
 	   elif number==2:
 	      x=arrayDotsOfRectangle[0][0]+10
 	      y=arrayDotsOfRectangle[0][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[2][0]-10
 	      y=arrayDotsOfRectangle[2][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	   elif number==3:
-	      c.create_oval(x_center-r,y_center-r,x_center+r,y_center+r,fill="white",width=1)
+	      self.canvas.create_oval(x_center-r,y_center-r,x_center+r,y_center+r,fill="white",width=1)
 	      x=arrayDotsOfRectangle[0][0]+10
 	      y=arrayDotsOfRectangle[0][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[2][0]-10
 	      y=arrayDotsOfRectangle[2][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	   elif number==4:
 	      x=arrayDotsOfRectangle[0][0]+10
 	      y=arrayDotsOfRectangle[0][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[2][0]-10
 	      y=arrayDotsOfRectangle[2][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[1][0]-10
 	      y=arrayDotsOfRectangle[1][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[3][0]+10
 	      y=arrayDotsOfRectangle[3][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	   elif number==5:
-	      c.create_oval(x_center-r,y_center-r,x_center+r,y_center+r,fill="white",width=1)
+	      self.canvas.create_oval(x_center-r,y_center-r,x_center+r,y_center+r,fill="white",width=1)
 	      x=arrayDotsOfRectangle[0][0]+10
 	      y=arrayDotsOfRectangle[0][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[2][0]-10
 	      y=arrayDotsOfRectangle[2][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[1][0]-10
 	      y=arrayDotsOfRectangle[1][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[3][0]+10
 	      y=arrayDotsOfRectangle[3][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	   elif number==6:
 	      x=arrayDotsOfRectangle[0][0]+10
 	      y=arrayDotsOfRectangle[0][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[2][0]-10
 	      y=arrayDotsOfRectangle[2][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[1][0]-10
 	      y=arrayDotsOfRectangle[1][1]+10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[3][0]+10
 	      y=arrayDotsOfRectangle[3][1]-10
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[1][0]-10
 	      y=arrayDotsOfRectangle[1][1]+25
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")
 	      x=arrayDotsOfRectangle[3][0]+10
 	      y=arrayDotsOfRectangle[3][1]-25
 	      x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
 	      y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
-	      c.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")  
+	      self.canvas.create_oval(x_new-r,y_new-r,x_new+r,y_new+r,fill="white")  
 
-a=ZonkGame()
 
+
+root=Tk()
+root.title("ZonkGameGui")
+root.geometry("800x600")
+GUI=ZonkGame(root)
+root.mainloop()
 
 """def GameStart():
 	   array=createSet()
