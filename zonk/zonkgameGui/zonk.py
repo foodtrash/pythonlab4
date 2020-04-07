@@ -5,7 +5,7 @@ class ZonkCount:
 		self.array=list()
 		for i in range (random.randint(1,6)):
 			self.array.append(random.randint(1,6))
-		#print (self.array)
+		print (self.array)
 	def score(self):
 		rule=[1,2,3,4,5,6]
 		number=0
@@ -47,6 +47,7 @@ class ZonkCount:
 				else:
 					self.total+=number*100
 		return self.total
+
 
 """passed=0
 if score([2,2,2,1,1,1])==1200:
