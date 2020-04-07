@@ -1,10 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
-from zonk import *
 import random
 import math
 
-class ZonkGame(ZonkCount):
+class ZonkGame():
 	def __init__(self,root):
 		self.canvas = Canvas(root, width=800, height=560,bg="white")
 		self.btnExit=Button(text="Exit",
@@ -14,16 +13,62 @@ class ZonkGame(ZonkCount):
 		self.btnExit.place(x=300,y=565)
 		self.btnThrow.place(x=400,y=565)
 		self.canvas.pack()
+		self.total=0
+		self.array=list()
+		for i in range (random.randint(1,6)):
+			self.array.append(random.randint(1,6))
+		print (self.array)
+	def score(self):
+		rule=[1,2,3,4,5,6]
+		number=0
+		count6dif=0
+		count3pair=0
+		for x in rule:
+			match =0
+			for y in self.array:
+				if y==x:
+					match=match+1
+					number=y
+			if match==1:
+				count6dif+=1
+				if count6dif==6:
+					self.total=1500
+				elif number==5 or number==1:
+					if number==5:
+						self.total+=50
+					elif number==1:
+						self.total+=100
+			elif match==2:		
+				count3pair+=1
+				if count3pair==3:
+					self.total=750
+					continue
+				elif number==5 or number==1:
+					if number==5:
+						self.total+=100
+					if number==1:
+						self.total+=200
+			elif match>=4:
+				if number==1:
+					self.total+=1000*(match-2)
+				else:
+					self.total+=number*100*(match-2)
+			elif match==3:
+				if number==1:
+					self.total+=1000
+				else:
+					self.total+=number*100
+		return self.total
 	def GameStart(self):
-	   array=ZonkCount()
-	   self.canvas.delete("all")
-	   for i in len(array):
-	     number=array[i]
-	     findDots_and_Painting(i,number)
-	   if array.score()<=1000:
-	      messagebox.showwarning("try again",score(array))
-	   if array.score()>1000:
-	      messagebox.showinfo("congratulation",score(array))
+		array=ZonkCount()
+		self.canvas.delete("all")
+		for i in len(array):
+	   	 	number=array[i]
+			findDots_and_Painting(i,number)
+		if array.score()<=1000:
+			messagebox.showwarning("try again",score(array))
+		if array.score()>1000:
+			messagebox.showinfo("congratulation",score(array))
 	def findDots_and_Painting(self,i,number):
 	   arrayDotsXStart=[30,293,556]
 	   arrayDotsXEnd=[263,526,770]
