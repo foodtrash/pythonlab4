@@ -1,7 +1,11 @@
+import random
 class ZonkCount:
-	def __init__(self,*args):
-		self.array=args
+	def __init__(self):
 		self.total=0
+		self.array=list()
+		for i in range (random.randint(1,6)):
+			self.array.append(random.randint(1,6))
+		#print (self.array)
 	def score(self):
 		rule=[1,2,3,4,5,6]
 		number=0
@@ -44,10 +48,6 @@ class ZonkCount:
 					self.total+=number*100
 		return self.total
 
-
-
-a=ZonkCount(2,2,2,2,2,2)
-print(a.score())
 """passed=0
 if score([2,2,2,1,1,1])==1200:
 	passed+=1
