@@ -50,7 +50,5 @@ class Testapp(unittest.TestCase):
         self.assertEqual(self.zonk.score([3,3,3,1,5,5]),500)
     def test21(self):
         self.assertEqual(self.zonk.score([1,2,3,4,5,6]),1500)
-    def test22(self):
-        self.assertEqual(self.zonk.score([1,2,3,4,5,6]),130)
 if __name__=="__main__":
     unittest.main()
