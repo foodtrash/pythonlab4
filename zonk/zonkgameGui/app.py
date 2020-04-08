@@ -4,11 +4,13 @@ import random
 import math
 from zonk import *
 
-class ZonkGame(ZonkCount):
-    def __init__(self,root):
-        self.canvas = Canvas(root, width=800, height=560,bg="white")
+class ZonkGame():
+    def __init__(self,root=None):
+        self.sys=root
+    def Buttons(self):
+        self.canvas = Canvas(self.sys, width=800, height=560,bg="white")
         self.btnExit=Button(text="Exit",
-                   command=root.destroy)
+                   command=self.sys.destroy)
         self.btnThrow=Button(text="Throw Bones",
                    command=self.GameStart)
         self.btnExit.place(x=300,y=565)
@@ -18,54 +20,62 @@ class ZonkGame(ZonkCount):
         self.canvas.delete("all")
         self.total=0
         self.array=list()
-        for i in range (6):
+        for i in range (random.randint(1,6)):
             self.array.append(random.randint(1,6))
-        count=0
         for number in range(len(self.array)):
             self.findDots(self.array[number],number)
+        if self.score()<=1000:
+            messagebox.showwarning("try again",self.score())
+        if self.score()>1000:
+            messagebox.showwarning("congratulations",self.score())
         print(self.array)
         print(self.score())
-    def score(self):
+    def score(self,set=None):
         rule=[1,2,3,4,5,6]
+        total=0
         number=0
+        if set!=None:
+            array=set
+        else:
+            array=self.array
         count6dif=0
         count3pair=0
         for x in rule:
-            match =0
-            for y in self.array:
+            match=0
+            for y in array:
                 if y==x:
                     match=match+1
                     number=y
             if match==1:
                 count6dif+=1
-            if count6dif==6:
-                self.total=1500
-            elif number==5 or number==1:
-                if number==5:
-                    self.total+=50
-            elif number==1:
-            	self.total+=100
-            elif match==2:		
+                if count6dif==6:
+                    total=1500
+                elif number==5 or number==1:
+                    if number==5:
+                        total+=50
+                    elif number==1:
+                        total+=100
+            elif match==2:      
                 count3pair+=1
-            if count3pair==3:
-                self.total=750
-                continue
-            elif number==5 or number==1:
-                if number==5:
-                    self.total+=100
-                if number==1:
-                    self.total+=200
+                if count3pair==3:
+                    total=750
+                    continue
+                elif number==5 or number==1:
+                    if number==5:
+                        total+=100
+                    if number==1:
+                        total+=200
             elif match>=4:
                 if number==1:
-                    self.total+=1000*(match-2)
+                    total+=1000*(match-2)
                 else:
-                    self.total+=number*100*(match-2)
+                    total+=number*100*(match-2)
             elif match==3:
                 if number==1:
-                    self.total+=1000
+                    total+=1000
                 else:
-                    self.total+=number*100
-        return self.total
+                    total+=number*100
+        return total
     def findDots(self,number,count):
         arrayDotsXStart=[30,293,556]
         arrayDotsXEnd=[263,526,770]
@@ -155,8 +165,12 @@ class ZonkGame(ZonkCount):
             self.canvas.create_oval(x_new-radius,y_new-radius,x_new+radius,y_new+radius,fill="white")  
 
 
-root=Tk()
-root.title("ZonkGameGui")
-root.geometry("800x600")
-GUI=ZonkGame(root)
-root.mainloop()
+if __name__=="__main__":
+    root=Tk()
+    root.title("ZonkGameGui")
+    root.geometry("800x600")
+    GUI=ZonkGame(root)
+    GUI.Buttons()
+    root.mainloop()
+
+
