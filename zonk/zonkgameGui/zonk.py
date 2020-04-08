@@ -1,53 +1,47 @@
 import random
-class ZonkCount:
-	def __init__(self):
-		self.total=0
-		self.array=list()
-		for i in range (random.randint(1,6)):
-			self.array.append(random.randint(1,6))
-		print (self.array)
-	def score(self):
-		rule=[1,2,3,4,5,6]
-		number=0
-		count6dif=0
-		count3pair=0
-		for x in rule:
-			match =0
-			for y in self.array:
-				if y==x:
-					match=match+1
-					number=y
-			if match==1:
-				count6dif+=1
-				if count6dif==6:
-					self.total=1500
-				elif number==5 or number==1:
-					if number==5:
-						self.total+=50
-					elif number==1:
-						self.total+=100
-			elif match==2:		
-				count3pair+=1
-				if count3pair==3:
-					self.total=750
-					continue
-				elif number==5 or number==1:
-					if number==5:
-						self.total+=100
-					if number==1:
-						self.total+=200
-			elif match>=4:
-				if number==1:
-					self.total+=1000*(match-2)
-				else:
-					self.total+=number*100*(match-2)
-			elif match==3:
-				if number==1:
-					self.total+=1000
-				else:
-					self.total+=number*100
-		return self.total
 
+def score(selection):
+    rule=[1,2,3,4,5,6]
+    total=0
+    number=0
+    count6dif=0
+    count3pair=0
+    for x in rule:
+        match =0
+        for y in selection:
+            if y==x:
+                match=match+1
+                number=y
+        if match==1:
+            count6dif+=1
+            if count6dif==6:
+                total=1500
+            elif number==5 or number==1:
+                if number==5:
+                    total+=50
+                elif number==1:
+                    total+=100
+        elif match==2:      
+            count3pair+=1
+            if count3pair==3:
+                total=750
+                continue
+            elif number==5 or number==1:
+                if number==5:
+                    total+=100
+                if number==1:
+                    total+=200
+        elif match>=4:
+            if number==1:
+                total+=1000*(match-2)
+            else:
+                total+=number*100*(match-2)
+        elif match==3:
+            if number==1:
+                total+=1000
+            else:
+                total+=number*100
+    return total
 
 """passed=0
 if score([2,2,2,1,1,1])==1200:
