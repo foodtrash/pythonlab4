@@ -11,7 +11,3 @@ class array():
             return self.findmax(iterator+1,self.array[iterator])
         else:
             return self.findmax(iterator+1,number)
-
-
-a=array([23,100,33,4,2,30,45,23])
-print(a.prepare())

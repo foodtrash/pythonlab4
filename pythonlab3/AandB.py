@@ -20,7 +20,3 @@ class AandB():
       array[iterator]=a
       self.a+=1
     return self.count(array,self.a,self.b,iterator+1)
-
-
-a=AandB(3,10)
-print(a.numbers())
