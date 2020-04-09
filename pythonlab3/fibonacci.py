@@ -1,18 +1,25 @@
-def fibonacci(number):
-  if number<0:
-    print("error")
-  elif number==0:
-    return 0
-  elif number==1:
-    return 1
-  elif number==2:
-    return 1
-  else:
-    return fibonacci(number-1)+fibonacci(number-2)
+class fibonacci():
+  def __init__(self,number):
+    self.number=number
+    self.a=0
+    self.b=1
+    self.count=0
+  def fibo(self):
+    fib =self.a
+    if self.count==self.number-2:
+      return self.b+self.a
+    self.a,self.b=self.b,self.a+self.b
+    self.count+=1
+    return self.fibo()
+
+a=fibonacci(42)
+print(a.fibo())
+
+
   
 
 
-def test_fibo():
+"""def test_fibo():
   passed=0
   if fibonacci(9)==34:
     passed+=1
@@ -32,3 +39,4 @@ def test_fibo():
     print("passed")
   else:
     print("nope")
+"""
