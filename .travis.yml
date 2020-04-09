@@ -6,4 +6,9 @@ cache: pip
 #       - "pip install unittest"
 script: 
        - cd zonk
-       - python Testapp.py
+       - python Testapp.py -v
+       - cd ..
+       - cd pythonlab3
+       - python TestAandB.py -v
+       - python TestFibonacci.py -v
+       - python TestFindmax.py -v
