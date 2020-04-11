@@ -7,7 +7,9 @@ from zonk import *
 class ZonkGame():
     def __init__(self,root=None):
         self.sys=root
+
     def Buttons(self):
+        #buttons to gui
         self.canvas = Canvas(self.sys, width=800, height=560,bg="white")
         self.btnExit=Button(text="Exit",
                    command=self.sys.destroy)
@@ -16,12 +18,15 @@ class ZonkGame():
         self.btnExit.place(x=300,y=565)
         self.btnThrow.place(x=400,y=565)
         self.canvas.pack()
+
     def GameStart(self):
         self.canvas.delete("all")
         self.total=0
+        #create total
         self.array=list()
         for i in range (random.randint(1,6)):
             self.array.append(random.randint(1,6))
+
         for number in range(len(self.array)):
             self.findDots(self.array[number],number)
         if self.score()<=1000:
@@ -30,8 +35,9 @@ class ZonkGame():
             messagebox.showwarning("congratulations",self.score())
         print(self.array)
         print(self.score())
-    def score(self,set=None):
 
+    def score(self,set=None):
+        #find score of set
         rule=[1,2,3,4,5,6]
         total=0
         number=0
@@ -79,12 +85,12 @@ class ZonkGame():
         return total
 
     def findDots(self,number,count):
+        #find dots for rectangle
         arrayDotsXStart=[30,293,556]
         arrayDotsXEnd=[263,526,770]
         arrayDotsYStart=[50,330]
         arrayDotsYEnd=[230,530]
         arrayDotsOfRectangle=list()
-
         j=0
         if count==3:
             count=0
@@ -95,7 +101,6 @@ class ZonkGame():
         elif count==5:
             count=2
             j=1
-
         randomNumberX=random.randint(arrayDotsXStart[count],arrayDotsXEnd[count])
         randomNumberY=random.randint(arrayDotsYStart[j],arrayDotsYEnd[j])
         arrayDotsOfRectangle.append([randomNumberX-50/2,randomNumberY-50/2])
@@ -105,11 +110,14 @@ class ZonkGame():
         x=randomNumberX
         y=randomNumberY
 
+        #rotate rectangle of 360 
         angle=math.radians(random.randint(0,360))
         cos_val=math.cos(angle)
         sin_val=math.sin(angle)
         cx=randomNumberX
         cy=randomNumberY
+
+        #new array of rotating rectangle
         new_points=[]
         for x_old,y_old in arrayDotsOfRectangle:
             x_old-=cx
@@ -120,8 +128,14 @@ class ZonkGame():
         self.painting(new_points,x,y,randomNumberX,randomNumberY,angle,arrayDotsOfRectangle,number)
 
     def painting(self,new_points,x,y,randomNumberX,randomNumberY,angle,arrayDotsOfRectangle,number):
+        
+        #radius of circle
         radius=7
+
+        #create poligon by start positions of rectangle 
         self.canvas.create_polygon(new_points,fill="blue")
+
+        #paint circles inside rectangle
         x_center=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
         y_center=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
         if number==1 or number==3 or number==5:
