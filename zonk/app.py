@@ -31,6 +31,7 @@ class ZonkGame():
         print(self.array)
         print(self.score())
     def score(self,set=None):
+
         rule=[1,2,3,4,5,6]
         total=0
         number=0
@@ -76,12 +77,14 @@ class ZonkGame():
                 else:
                     total+=number*100
         return total
+
     def findDots(self,number,count):
         arrayDotsXStart=[30,293,556]
         arrayDotsXEnd=[263,526,770]
         arrayDotsYStart=[50,330]
         arrayDotsYEnd=[230,530]
         arrayDotsOfRectangle=list()
+
         j=0
         if count==3:
             count=0
@@ -92,6 +95,7 @@ class ZonkGame():
         elif count==5:
             count=2
             j=1
+
         randomNumberX=random.randint(arrayDotsXStart[count],arrayDotsXEnd[count])
         randomNumberY=random.randint(arrayDotsYStart[j],arrayDotsYEnd[j])
         arrayDotsOfRectangle.append([randomNumberX-50/2,randomNumberY-50/2])
@@ -100,6 +104,7 @@ class ZonkGame():
         arrayDotsOfRectangle.append([randomNumberX-50/2,randomNumberY+50/2])
         x=randomNumberX
         y=randomNumberY
+
         angle=math.radians(random.randint(0,360))
         cos_val=math.cos(angle)
         sin_val=math.sin(angle)
@@ -113,6 +118,7 @@ class ZonkGame():
             y_new=x_old*sin_val+y_old*cos_val
             new_points.append([x_new+cx,y_new+cy])
         self.painting(new_points,x,y,randomNumberX,randomNumberY,angle,arrayDotsOfRectangle,number)
+
     def painting(self,new_points,x,y,randomNumberX,randomNumberY,angle,arrayDotsOfRectangle,number):
         radius=7
         self.canvas.create_polygon(new_points,fill="blue")
@@ -120,6 +126,7 @@ class ZonkGame():
         y_center=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
         if number==1 or number==3 or number==5:
             self.canvas.create_oval(x_center-radius,y_center-radius,x_center+radius,y_center+radius,fill="white",width=1)
+
         if number==2 or number==3:
             x=arrayDotsOfRectangle[0][0]+10
             y=arrayDotsOfRectangle[0][1]+10
@@ -131,6 +138,7 @@ class ZonkGame():
             x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
             y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
             self.canvas.create_oval(x_new-radius,y_new-radius,x_new+radius,y_new+radius,fill="white")
+
         if number==4 or number==5 or number==6:
             x=arrayDotsOfRectangle[0][0]+10
             y=arrayDotsOfRectangle[0][1]+10
@@ -152,6 +160,7 @@ class ZonkGame():
             x_new=math.cos(angle)*(x-randomNumberX)-math.sin(angle)*(y-randomNumberY)+randomNumberX
             y_new=math.sin(angle)*(x-randomNumberX)+math.cos(angle)*(y-randomNumberY)+randomNumberY
             self.canvas.create_oval(x_new-radius,y_new-radius,x_new+radius,y_new+radius,fill="white")
+
         if number==6:
             x=arrayDotsOfRectangle[1][0]-10
             y=arrayDotsOfRectangle[1][1]+25
